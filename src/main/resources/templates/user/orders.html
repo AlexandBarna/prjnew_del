@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>История заказов</title>
+    <link rel="stylesheet" th:href="@{/css/index.css}" type="text/css">
+    <link rel="stylesheet" href="../../static/css/index.css" type="text/css">
+</head>
+<body>  
+    <div class="conteiner">
+      <header class="header">
+        <div class="in_header_user">
+           <div class="in_header_logo">
+              <img th:src="@{/img/logomini.png}" class="logo">
+              <!-- <img src="../../static/img/logomini.png" class="logo"> -->
+           </div>
+           <div class="in_header_title">
+              
+           </div>
+           <div class="in_header_user__btn"> 
+                <button type="button" th:onclick="|window.location.href='/orders'|" class="btn_history">История</button>
+                <button type="button" th:onclick="|window.location.href='/cart'|" class="btn_history">Корзина</button>
+                <button type="button" th:onclick="|window.location.href='/authentication/logout'|" class="btn_history">Выход</button>
+           </div>            
+        </div>
+             
+      </header>
+      <div class="out_header">
+          <img th:src="@{/img/photo.jpg}" class="logo_main">        
+          <!-- <img src="../../static/img/photo.jpg" class="logo_main"> -->
+      </div>   
+      <div class="body">
+        <div class="body_conteiner_text">
+          <span></span>
+          <p class="body_text">Почему вообще появилась услуга подбор автомобиля и почему она востребована? Вторичный рынок автомобилей в России велик и в продаже можно встретить всё что угодно – бывшие такси и каршеринги, скрученные пробеги, автомобили после серьезных аварий, с серьезными неисправностями, машины в залоге, с ограничениями на регистрационные действия и даже автомобили в угоне. И где-то среди всего этого разнообразия скрываются и хорошие автомобили, в продаже которых, к сожалению, меньше всего.
+          </p>
+          <span></span>
+        </div>
+      </div>
+      <div class="price_conteiner">
+        <span></span>
+        <div class="price_in_conteiner">
+            <div class="btn_checkout">
+               <a class="tag_a_checkout" th:href="@{/index}">Назад</a>
+            </div>
+            <h3>Заказы</h3>          
+        </div>
+        <span></span>
+      </div>
+      <div class="body_user">        
+        <span></span>
+        <div class="product_section">
+            <div class="product_card">
+                <div th:each="order : ${orders}" class="product">
+                    <h3 th:text="'Заказ № ' + ${order.getNumber()}"></h3>
+                    <img th:src="'/img/' + ${order.getProduct().imageList[0].getFileName()}" width="200px">
+                    <p th:text="'Наименование: ' + ${order.getProduct().getTitle()}"></p>
+                    <p th:text="'Количество: ' + ${order.getCount()}"></p>
+                    <p th:text="'Цена: ' + ${order.getPrice()}"></p>
+                    <p th:text="'Дата заказа: ' + ${#temporals.format(order.getDateTime(), 'dd-MMM-yyyy')}"></p>
+                    <p th:text="'Статус: ' + ${order.getStatus()}">
+                </div> 
+            </div>       
+        </div>    
+        </div>               
+        <span></span>  
+      </div>
+      <footer class="footer">
+        <div class="in_footer">
+       
+        </div>
+      </footer>          
+    </div>    
+
+</body>
+</html>
+
+

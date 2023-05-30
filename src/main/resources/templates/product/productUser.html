@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная страница</title>
+    <link rel="stylesheet" th:href="@{/css/index.css}" type="text/css">
+    <link rel="stylesheet" href="../../static/css/index.css" type="text/css">
+</head>
+<body>  
+    <div class="conteiner">
+      <header class="header">
+        <div class="in_header_user">
+           <div class="in_header_logo">
+              <img th:src="@{/img/logomini.png}" class="logo">
+              <!-- <img src="../../static/img/logomini.png" class="logo"> -->
+           </div>
+           <div class="in_header_title">
+              
+           </div>
+           <div class="in_header_user__btn"> 
+                <button type="button" th:onclick="|window.location.href='/orders'|" class="btn_history">История</button>
+                <button type="button" th:onclick="|window.location.href='/cart'|" class="btn_history">Корзина</button>
+                <button type="button" th:onclick="|window.location.href='/authentication/logout'|" class="btn_history">ВыходT</button>
+           </div>            
+        </div>
+             
+      </header>
+      <div class="out_header">
+        <img th:src="@{/img/photo.jpg}" class="logo_main">        
+        <!-- <img src="../static/img/photo.jpg" class="logo_main"> -->
+    </div>   
+    <div class="body">
+      <div class="body_conteiner_text">
+        <span></span>
+        <p class="body_text">Почему вообще появилась услуга подбор автомобиля и почему она востребована? Вторичный рынок автомобилей в России велик и в продаже можно встретить всё что угодно – бывшие такси и каршеринги, скрученные пробеги, автомобили после серьезных аварий, с серьезными неисправностями, машины в залоге, с ограничениями на регистрационные действия и даже автомобили в угоне. И где-то среди всего этого разнообразия скрываются и хорошие автомобили, в продаже которых, к сожалению, меньше всего.
+        </p>
+        <span></span>
+      </div>
+    </div>
+    <div class="sort_body">
+      <span></span>
+      <div>
+          <form th:method="POST" th:action="@{/product/search}" id="searchForm">
+              <fieldset>
+                  <span class="row_search">
+                      <span>
+                          <span>
+                              <input type="text" name="Search" id="search" placeholder="Наименование">
+                          </span>
+                          <span>
+                              <input class="input" type="text" name="Ot" id="Ot" placeholder="от"> 
+                              <input type="text" name="Do" id="Do" placeholder="до">
+                          </span>
+                          <span>                           
+                              <select type="text" form="searchForm" name="category" th:value="${category}" class=""size-select
+                              id="category">
+                                 <option value="">Выберите категорию</option>                                        
+                                 <option name="option"  th:each="element : ${category}" th:value="${element}" th:text="${element}"
+                                 th:selected="${element == category}" ></option>                                    
+                             </select>                                 
+                          </span>
+                          <span>
+                              <input name="sub" type="submit" value="Поиск">
+                          </span>                             
+                      </span>                                         
+                      <span class="radio">                           
+                         <input type="radio" id="ascending_price" name="price" value="asc">
+                         <label for="ascending_price">по возрастанию цены</label>
+                         <br>                           
+                         <input type="radio" id="descending_price" name="price" value="desc">
+                         <label for="descending_price">по убыванию цены</label>                                
+                      </span>                       
+                  </span>       
+              </fieldset>
+              <br>
+          </form>             
+      </div>
+      <span></span>        
+    </div>
+    <h3 class="result">Результат поиска</h3>
+    <div class="body_product">
+      <div class="product_section_search">  
+        <div class="product_card">
+            <div th:each="product : ${search_product}" class="product">
+              <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="300px">
+              <br>
+              <p th:text="${product.getTitle()}"></p>
+              <p th:text="${product.getCategory().getName()}"></p>
+              <p th:text="'Цена: ' + ${product.getPrice()}"></p> 
+              <div class="btn_product">
+                  <div class="btn_delete">
+                      <a class="tag_a_delete" th:href="@{/cart/add/{id}(id=${product.getId()})}">Добавить</a>
+                  </div>                
+                  <div class="btn_delete">
+                      <a class="tag_a_delete" th:href="@{/product/infouser/{id}(id=${product.getId()})}">Информация</a>
+                  </div>                    
+               </div>        
+            </div>
+        </div>  
+      </div>  
+   </div>
+    <h3 class="result">Доступные услуги</h3>     
+    <div class="body_product">  
+      <div class="product_section_search">
+        <div class="product_card">
+          <div th:each="product : ${products}" class="product">
+             <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="300px">
+             <br>
+              <p th:text="${product.getTitle()}"></p>
+              <p th:text="${product.getCategory().getName()}"></p>
+              <p th:text="'Цена: ' + ${product.getPrice()}"></p>
+              <div class="btn_product">
+                  <div class="btn_delete">
+                      <a class="tag_a_delete" th:href="@{/cart/add/{id}(id=${product.getId()})}">Добавить</a>
+                  </div>                
+                  <div class="btn_delete">
+                      <a class="tag_a_delete" th:href="@{/product/infouser/{id}(id=${product.getId()})}">ИнформацияO</a>
+                  </div>                    
+               </div>
+          </div>            
+        </div>
+      </div>
+    </div>
+
+<footer class="footer">
+    <div class="in_footer">
+        
+    </div>
+  </footer>          
+</div>    
+
+</body>
+</html>
